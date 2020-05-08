@@ -179,8 +179,8 @@ module.exports = function (api, options) {
 		config.plugin('copy-platform')
 			.use(CopyPlugin, [
 				[
-					// copy app/platform/<splatform>
-					{ from: `platform/${build.platform}`, to: `../platform/${build.platform}` }
+					// copy app/platform/<platform>
+					{ from: `app/platform/${build.platform}`, to: `../platform/${build.platform}` }
 				]
 			]);
 		const platformExclude = {
@@ -220,16 +220,16 @@ module.exports = function (api, options) {
 			]);
 		config.plugin('clean')
 			.tap(args => {
-				const options = args[0] || {
-					cleanOnceBeforeBuildPatterns: [ '**/*' ]
-				};
+        const options = args[0] || {};
+        options.dry = false;
 				options.cleanOnceBeforeBuildPatterns = [
-					...options.cleanOnceBeforeBuildPatterns,
+					...(options.cleanOnceBeforeBuildPatterns || [ '**/*' ]),
 					'../platform',
 					'../i18n',
 					'!alloy',
 					'!alloy/CFG.js'
-				];
+        ];
+        options.dangerouslyAllowCleanPatternsOutsideProject = true;
 				args[0] = options;
 				return args;
 			});
