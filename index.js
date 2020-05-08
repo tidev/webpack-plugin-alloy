@@ -1,4 +1,4 @@
-/* eslint indent: "off" */
+/* eslint indent: ["error", "tab", { "MemberExpression": "off" }] */
 
 const CopyPlugin = require('copy-webpack-plugin');
 const fs = require('fs');
@@ -43,13 +43,13 @@ module.exports = function (api, options) {
 	api.watch(watchFiles);
 
 	api.chainWebpack(config => {
-    config.resolveLoader.modules.prepend(path.join(__dirname, 'node_modules'));
+		config.resolveLoader.modules.prepend(path.join(__dirname, 'node_modules'));
 
 		// entry -------------------------------------------------------------------
 
 		config
-      .entry('main')
-        .clear()
+			.entry('main')
+				.clear()
 				.add('./app/alloy.js')
 				.end();
 
@@ -76,53 +76,53 @@ module.exports = function (api, options) {
 				.add(api.resolve('app', 'lib'))
 				.add(api.resolve('app', 'vendor'));
 
-    // module rules ------------------------------------------------------------
+		// module rules ------------------------------------------------------------
 
-    const alloyCacheIdentifiers = {
-      alloy: api.requirePeer('alloy/package.json').version,
+		const alloyCacheIdentifiers = {
+			alloy: api.requirePeer('alloy/package.json').version,
 			'alloy-compiler': api.requirePeer('alloy-compiler/package.json').version
-    };
-    const cacheIdentifiers = {
-      ...alloyCacheIdentifiers
-    };
-    const configFiles = [ ...watchFiles ];
-    const jsRule = config.module.rule('js');
-    const alloyLoader = jsRule.use('alloy-loader')
-      .loader('alloy-loader')
-      .options({
-        compiler: alloyCompiler
-      });
-    if (api.hasPlugin('babel')) {
-      const { generateCacheIdentifiers, loadBabelConfig } = api.requirePeer('@titanium-sdk/webpack-plugin-babel/utils');
+		};
+		const cacheIdentifiers = {
+			...alloyCacheIdentifiers
+		};
+		const configFiles = [ ...watchFiles ];
+		const jsRule = config.module.rule('js');
+		const alloyLoader = jsRule.use('alloy-loader')
+			.loader('alloy-loader')
+			.options({
+				compiler: alloyCompiler
+			});
+		if (api.hasPlugin('babel')) {
+			const { generateCacheIdentifiers, loadBabelConfig } = api.requirePeer('@titanium-sdk/webpack-plugin-babel/utils');
 			const { options: babelOptions } = loadBabelConfig(api, options);
-      const babelCacheIdentifiers = generateCacheIdentifiers(babelOptions);
-      Object.assign(cacheIdentifiers, babelCacheIdentifiers);
-      configFiles.push('babel.config.js');
-      alloyLoader.after('babel-loader');
-    }
-    if (api.hasPlugin('typescript')) {
-      config.module.rule('ts')
-        .use('alloy-loader')
-          .loader('alloy-loader')
-          .before('ts-loader')
-          .options({ compiler: alloyCompiler })
-          .end()
-        .use('cache-loader')
-          .tap(() => api.generateCacheConfig(
-            'alloy-loader',
-            {},
-            [ 'tsconfig.json', ...configFiles ]
-          ));
-    }
-    const cacheConfig = api.generateCacheConfig('alloy-loader', cacheIdentifiers, configFiles);
-    if (jsRule.has('cache-loader')) {
-      jsRule.use('cache-loader')
-        .tap(() => cacheConfig);
-    } else {
-      jsRule.use('cache-loader')
-        .loader('cache-loader')
-        .options(cacheConfig);
-    }
+			const babelCacheIdentifiers = generateCacheIdentifiers(babelOptions);
+			Object.assign(cacheIdentifiers, babelCacheIdentifiers);
+			configFiles.push('babel.config.js');
+			alloyLoader.after('babel-loader');
+		}
+		if (api.hasPlugin('typescript')) {
+			config.module.rule('ts')
+				.use('alloy-loader')
+					.loader('alloy-loader')
+					.before('ts-loader')
+					.options({ compiler: alloyCompiler })
+					.end()
+				.use('cache-loader')
+					.tap(() => api.generateCacheConfig(
+						'alloy-loader',
+						{},
+						[ 'tsconfig.json', ...configFiles ]
+					));
+		}
+		const cacheConfig = api.generateCacheConfig('alloy-loader', cacheIdentifiers, configFiles);
+		if (jsRule.has('cache-loader')) {
+			jsRule.use('cache-loader')
+				.tap(() => cacheConfig);
+		} else {
+			jsRule.use('cache-loader')
+				.loader('cache-loader')
+				.options(cacheConfig);
+		}
 
 		config.module
 			.rule('tss')
@@ -220,16 +220,16 @@ module.exports = function (api, options) {
 			]);
 		config.plugin('clean')
 			.tap(args => {
-        const options = args[0] || {};
-        options.dry = false;
+				const options = args[0] || {};
+				options.dry = false;
 				options.cleanOnceBeforeBuildPatterns = [
 					...(options.cleanOnceBeforeBuildPatterns || [ '**/*' ]),
 					'../platform',
 					'../i18n',
 					'!alloy',
 					'!alloy/CFG.js'
-        ];
-        options.dangerouslyAllowCleanPatternsOutsideProject = true;
+				];
+				options.dangerouslyAllowCleanPatternsOutsideProject = true;
 				args[0] = options;
 				return args;
 			});
