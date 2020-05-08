@@ -10,7 +10,7 @@ To install this plugin in an existing project, run the following command in your
 npm i @titanium-sdk/webpack-plugin-alloy alloy alloy-compiler
 ```
 
-Be sure to follow the migration steps below when enabling Webpack in an existing Titanium Classic project, as well as the general [migration guideline](https://github.com/appcelerator/appcd-plugin-webpack/blob/develop/migration.md).
+Be sure to follow the migration steps below when enabling Webpack in an existing Titanium Alloy project, as well as the general [migration guideline](https://github.com/appcelerator/appcd-plugin-webpack/blob/develop/migration.md).
 
 ## Migration
 
@@ -62,7 +62,7 @@ Requires in widgets need to use `@widget` instead of `WPATH`
 require(WPATH('utils'))
 
 // with webpack
-require('~widget/utils')
+require('@widget/utils')
 ```
 
 #### Use ES6 `export` in Models
