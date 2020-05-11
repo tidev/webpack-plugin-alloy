@@ -4,7 +4,8 @@
   "description": "Titanium Alloy Plugin for Appcd Webpack",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "yarn run lint"
   },
   "keywords": [
     "titanium",
