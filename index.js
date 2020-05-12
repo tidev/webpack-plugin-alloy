@@ -174,15 +174,22 @@ module.exports = function (api, options) {
 				});
 			}
 		}
-		config.plugin('copy-theme-files')
-			.use(CopyPlugin, [ copyThemeOptions ]);
-		config.plugin('copy-platform')
-			.use(CopyPlugin, [
-				[
-					// copy app/platform/<platform>
-					{ from: `app/platform/${build.platform}`, to: `../platform/${build.platform}` }
-				]
-			]);
+		if (copyThemeOptions.length > 0) {
+			config.plugin('copy-theme-files')
+				.use(CopyPlugin, [ copyThemeOptions ]);
+		}
+
+		const platformPath = api.resolve('app', 'platform', build.platform);
+		if (fs.existsSync(platformPath)) {
+			config.plugin('copy-platform')
+				.use(CopyPlugin, [
+					[
+						// copy app/platform/<platform>
+						{ from: `app/platform/${build.platform}`, to: `../platform/${build.platform}` }
+					]
+				]);
+		}
+
 		const platformExclude = {
 			android: 'ios',
 			ios: 'android'
