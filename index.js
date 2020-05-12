@@ -153,7 +153,6 @@ module.exports = function (api, options) {
 			const themeRoot = path.posix.join(
 				appDir, 'themes', theme
 			);
-
 			// copy app/theme/<theme>/platform/<platform>
 			const themePlatformPath = path.posix.join(
 				themeRoot, 'platform', build.platform
@@ -164,7 +163,6 @@ module.exports = function (api, options) {
 					to: `../platform/${build.platform}`
 				});
 			}
-
 			// copy app/theme/<theme>/assets
 			const themeAssetsPath = path.posix.join(themeRoot, 'assets');
 			if (fs.existsSync(themeAssetsPath)) {
@@ -220,7 +218,7 @@ module.exports = function (api, options) {
 		config.plugin('copy-widget-assets')
 			.use(CopyPlugin, [ copyWidgetAssetsOptions ]);
 
-		config.plugin('externals')
+		config.plugin('backbone-externals')
 			.use(ExternalsPlugin, [
 				'commonjs',
 				[ 'jquery', 'file', 'system' ]
