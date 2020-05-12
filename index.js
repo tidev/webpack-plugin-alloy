@@ -244,14 +244,33 @@ module.exports = function (api, options) {
 					/alloy[/\\]CFG.js/
 				]
 			]);
+
+		const defines = {
+			ALLOY_VERSION: `'${api.requirePeer('alloy/package.json').version}'`,
+			ENV_DEV: build.deployType === 'development',
+			ENV_DEVELOPMENT: build.deployType === 'development',
+			ENV_TEST: build.deployType === 'test',
+			ENV_PROD: build.deployType === 'production',
+			ENV_PRODUCTION: build.deployType === 'production',
+			OS_ANDROID: build.platform === 'android',
+			OS_IOS: build.platform === 'ios',
+			// mobile web is dead, Alloy just still doesn't know it yet.
+			OS_MOBILEWEB: false,
+			DIST_ADHOC: build.target === 'dist-adhoc',
+			DIST_STORE: [ 'dist-appstore', 'dist-playstore' ].includes(build.target),
+		};
+		defines['Ti.Platform.name'] = JSON.stringify(build.platform);
+		defines['Titanium.Platform.name'] = JSON.stringify(build.platform);
+		if (build.platform === 'ios' && build.ios.deviceFamily !== 'universal') {
+			defines['Ti.Platform.osname'] = JSON.stringify(build.ios.deviceFamily);
+			defines['Titanium.Platform.osname'] = JSON.stringify(build.ios.deviceFamily);
+		} else if (build.platform === 'android') {
+			defines['Ti.Platform.osname'] = JSON.stringify(build.platform);
+			defines['Titanium.Platform.osname'] = JSON.stringify(build.platform);
+		}
 		config.plugin('alloy-defines')
-			.use(DefinePlugin, [
-				{
-					ALLOY_VERSION: api.requirePeer('alloy/package.json').version,
-					// mobile web is dead, Alloy just still doesn't know it yet.
-					OS_MOBILEWEB: false
-				}
-			]);
+			.use(DefinePlugin, [ defines ]);
+
 		config.plugin('widget-alias')
 			.use(NormalModuleReplacementPlugin, [
 				/@widget/,
