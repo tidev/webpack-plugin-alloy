@@ -67,6 +67,13 @@ module.exports = function (api, options) {
 				.set('/alloy/styles', api.resolve('app', 'styles'))
 				.set('/alloy/widgets', api.resolve('app', 'widgets'))
 				.set('/alloy/CFG', api.resolve('Resources', 'alloy', 'CFG'))
+				.set('/alloy/animation', path.join(alloyRoot, 'builtins', 'animation.js'))
+				.set('/alloy/dialogs', path.join(alloyRoot, 'builtins', 'dialogs.js'))
+				.set('/alloy/measurement', path.join(alloyRoot, 'builtins', 'measurement.js'))
+				.set('/alloy/moment', path.join(alloyRoot, 'builtins', 'moment'))
+				.set('/alloy/sha1', path.join(alloyRoot, 'builtins', 'sha1.js'))
+				.set('/alloy/social', path.join(alloyRoot, 'builtins', 'social.js'))
+				.set('/alloy/string', path.join(alloyRoot, 'builtins', 'string.js'))
 				.set('/alloy', path.join(alloyRoot, 'lib', 'alloy'))
 				.end()
 			.extensions
