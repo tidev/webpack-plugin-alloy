@@ -288,5 +288,21 @@ module.exports = function (api, options) {
 				args[1] = 'app/lib';
 				return args;
 			});
+
+		let supportedLocales = [];
+		const i18nDir = path.join(appDir, 'i18n');
+		if (fs.existsSync(i18nDir)) {
+			supportedLocales = fs.readdirSync(i18nDir);
+		}
+		config.plugin('moment-locales')
+			.use(ContextReplacementPlugin, [
+				/moment[/\\]lang/,
+				supportedLocales.length > 0
+					// matches only locales we want to bundle
+					// eslint-disable-next-line security/detect-non-literal-regexp
+					? new RegExp(`[/\\\\](${supportedLocales.join('|')})\\.js`)
+					// doesn’t match anything – see https://stackoverflow.com/a/2930280/1192426
+					: /\b\B/
+			]);
 	});
 };
