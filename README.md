@@ -20,16 +20,14 @@ Since Webpack now compiles your Alloy app the default Alloy plugin is not requir
 
 ### Create required folders
 
-Webpack requires that your project includes all possible Alloy sub-folders, even if they are empty. This is due to the way Webpack resolves dynamic requires and it needs to scan folders like `app/controllers` or `app/widgets`. Make sure your project structure looks like this and create folders if neccessary:
+Webpack requires that your project includes certain Alloy sub-folders, even if they are empty. This is due to the way Webpack resolves dynamic requires and it needs to scan folders like `app/controllers` or `app/widgets`. Make sure your project has these files and folders and create them if neccessary:
 
 ```txt
 app/
 ├── assets/
 ├── controllers/
-├── i18n/
 ├── lib/
 ├── models/
-├── platform/
 ├── styles/
 ├── views/
 ├── widgets/
@@ -108,8 +106,27 @@ This plugin will add/modify the following Webpack options:
 ### Resolve
 
 - Aliases
-  - `@`: `./src`
+  - `@`: `app`
+- Extensions: `xml`, `tss`
+- Modules: `app/lib`, `app/vendor`
+
+### Rules
+
+- `rule('js')`
+- `rule('js').use('cache-loader')`
+- `rule('js').use('alloy-loader')`
+- `rule('ts').use('alloy-loader')` (when used alongside `@titanium-sdk/webpack-plugin-typescript`)
 
 ### Plugins
 
-- `plugin('copy-assets')` (copy files from `./src/assets` into `./Resources`)
+- `plugin('alloy-loader')`: plugin from [`alloy-loader`](https://github.com/appcelerator/alloy-loader/blob/develop/lib/plugin.js)
+- `plugin('copy-theme-files')`: copy files from theme's `assets` and `platform` if a theme is configured
+- `plugin('copy-platform')`: copy files from `app/platform/<platform>` into `platform/<platform>`
+- `plugin('copy-assets')`: copy files from `app/assets` into `Resources`
+- `plugin('copy-widget-assets')`: copy files from `app/widget/<widget>/assets` into `Resources/<widget>`
+- `plugin('backbone-externals)`: mark unused backbone dependencies as external modules to prevent bundling
+- `plugin('watch-ignore)`: ignore watching of generated Alloy config files
+- `plugin('alloy-defines)`: use `DefinePlugin` to replace a couple of constants in Alloy
+- `plugin('widget-alias)`: rewrite requires from widgets that use `@widget` to point to a widget's `lib` folder.
+- `plugin('bootstrap-files)`: modify bootstrap entry to search `app/lib` for `.bootstrap.js` files
+- `plugin('moment-locales')`: filter moment.js locales based on languages in `app/i18n` folder
