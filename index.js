@@ -36,12 +36,20 @@ module.exports = function (api, options) {
 	});
 
 	const theme = compileConfig.theme;
-
 	const watchFiles = [ path.join(appDir, 'config.json') ];
 	if (theme) {
 		watchFiles.push(path.join(appDir, 'themes', theme, 'config.json'));
 	}
 	api.watch(watchFiles);
+
+	const alloyCacheIdentifiers = {
+		alloy: api.requirePeer('alloy/package.json').version,
+		'alloy-compiler': api.requirePeer('alloy-compiler/package.json').version
+	};
+	const cacheIdentifiers = {
+		...alloyCacheIdentifiers
+	};
+	const configFiles = [ ...watchFiles ];
 
 	api.chainWebpack(config => {
 		config.resolveLoader.modules.add(path.join(__dirname, 'node_modules'));
@@ -86,48 +94,18 @@ module.exports = function (api, options) {
 
 		// module rules ------------------------------------------------------------
 
-		const alloyCacheIdentifiers = {
-			alloy: api.requirePeer('alloy/package.json').version,
-			'alloy-compiler': api.requirePeer('alloy-compiler/package.json').version
-		};
-		const cacheIdentifiers = {
-			...alloyCacheIdentifiers
-		};
-		const configFiles = [ ...watchFiles ];
 		const jsRule = config.module.rule('js');
-		const alloyLoader = jsRule.use('alloy-loader')
+		jsRule.use('alloy-loader')
 			.loader('alloy-loader')
 			.options({
 				compiler: alloyCompiler
 			});
-		if (api.hasPlugin('babel')) {
-			const { generateCacheIdentifiers, loadBabelConfig } = api.requirePeer('@titanium-sdk/webpack-plugin-babel/utils');
-			const { options: babelOptions } = loadBabelConfig(api, options);
-			const babelCacheIdentifiers = generateCacheIdentifiers(babelOptions);
-			Object.assign(cacheIdentifiers, babelCacheIdentifiers);
-			configFiles.push('babel.config.js');
-			alloyLoader.after('babel-loader');
-		}
-		if (api.hasPlugin('typescript')) {
-			config.module.rule('ts')
-				.use('alloy-loader')
-					.loader('alloy-loader')
-					.before('ts-loader')
-					.options({ compiler: alloyCompiler })
-					.end()
-				.use('cache-loader')
-					.tap(() => api.generateCacheConfig(
-						'alloy-loader',
-						{},
-						[ 'tsconfig.json', ...configFiles ]
-					));
-		}
-		const cacheConfig = api.generateCacheConfig('alloy-loader', cacheIdentifiers, configFiles);
-		if (jsRule.has('cache-loader')) {
+
+		if (!api.hasPlugin('babel')) {
+			// if babel plugin is not present, add our own cache-loader
+			const cacheConfig = api.generateCacheConfig('alloy-loader', cacheIdentifiers, configFiles);
 			jsRule.use('cache-loader')
-				.tap(() => cacheConfig);
-		} else {
-			jsRule.use('cache-loader')
+				.before('alloy-loader')
 				.loader('cache-loader')
 				.options(cacheConfig);
 		}
@@ -312,5 +290,55 @@ module.exports = function (api, options) {
 					// doesn’t match anything – see https://stackoverflow.com/a/2930280/1192426
 					: /\b\B/
 			]);
-	});
+	}, { after: 'built-in:config/app' });
+
+	if (api.hasPlugin('babel')) {
+		// update cache-loader and set order for alloy-loader
+		const { generateCacheIdentifiers, loadBabelConfig } = api.requirePeer('@titanium-sdk/webpack-plugin-babel/utils');
+		const { options: babelOptions } = loadBabelConfig(api, options);
+		const babelCacheIdentifiers = generateCacheIdentifiers(babelOptions);
+		Object.assign(cacheIdentifiers, babelCacheIdentifiers);
+		configFiles.push('babel.config.js');
+		api.chainWebpack(config => {
+			config.module.rule('js')
+				.use('alloy-loader')
+					.after('babel-loader')
+					.end()
+				.use('cache-loader')
+					.tap(() => api.generateCacheConfig('alloy-babel-loader', cacheIdentifiers, configFiles));
+		}, {
+			name: `${api.id}/babel`,
+			after: '@titanium-sdk/wepack-plugin-babel'
+		});
+	}
+
+	if (api.hasPlugin('typescript')) {
+		// add alloy-loader to ts rule
+		const { cacheIdentifiers: tsCacheIdentifiers } = api.requirePeer('@titanium-sdk/webpack-plugin-typescript/utils');
+		api.chainWebpack(config => {
+			const tsRule = config.module.rule('ts')
+				.use('alloy-loader')
+					.loader('alloy-loader')
+					.options({ compiler: alloyCompiler })
+					.end()
+				.use('cache-loader')
+					.tap(() => api.generateCacheConfig(
+						'alloy-ts-loader',
+						{
+							...cacheIdentifiers,
+							tsCacheIdentifiers
+						},
+						[ 'tsconfig.json', ...configFiles ]
+					))
+					.end();
+			if (api.hasPlugin('babel')) {
+				tsRule.use('alloy-loader').after('babel-loader');
+			} else {
+				tsRule.use('alloy-loader').before('ts-loader');
+			}
+		}, {
+			name: `${api.id}/typescript`,
+			after: '@titanium-sdk/webpack-plugin-typescript'
+		});
+	}
 };
