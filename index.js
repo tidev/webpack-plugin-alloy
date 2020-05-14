@@ -4,6 +4,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const fs = require('fs');
 const path = require('path');
 const {
+	ContextReplacementPlugin,
 	DefinePlugin,
 	ExternalsPlugin,
 	NormalModuleReplacementPlugin,
