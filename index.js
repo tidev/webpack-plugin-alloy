@@ -308,7 +308,7 @@ module.exports = function (api, options) {
 					.tap(() => api.generateCacheConfig('alloy-babel-loader', cacheIdentifiers, configFiles));
 		}, {
 			name: `${api.id}/babel`,
-			after: '@titanium-sdk/wepack-plugin-babel'
+			after: '@titanium-sdk/webpack-plugin-babel'
 		});
 	}
 
