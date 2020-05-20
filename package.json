@@ -35,7 +35,7 @@
   },
   "peerDependencies": {
     "alloy": ">=1.14.0",
-    "alloy-compiler": ">=0.2.1",
+    "alloy-compiler": ">=0.2.2",
     "webpack": "^4.0.0"
   },
   "publishConfig": {
