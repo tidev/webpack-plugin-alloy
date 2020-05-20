@@ -7,7 +7,7 @@
 To install this plugin in an existing project, run the following command in your project root:
 
 ```sh
-npm i @titanium-sdk/webpack-plugin-alloy alloy alloy-compiler
+npm i -D @titanium-sdk/webpack-plugin-alloy alloy alloy-compiler
 ```
 
 Be sure to follow the migration steps below when enabling Webpack in an existing Titanium Alloy project, as well as the general [migration guideline](https://github.com/appcelerator/appcd-plugin-webpack/blob/develop/migration.md).
