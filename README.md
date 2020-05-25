@@ -12,6 +12,10 @@ npm i -D @titanium-sdk/webpack-plugin-alloy alloy alloy-compiler
 
 Be sure to follow the migration steps below when enabling Webpack in an existing Titanium Alloy project, as well as the general [migration guideline](https://github.com/appcelerator/appcd-plugin-webpack/blob/develop/migration.md).
 
+## Caching
+
+Output of this loader is cached using [cache-loader](https://github.com/webpack-contrib/cache-loader). The cache is stored under `<project>/node_modules/.cache/alloy-loader`. If you also use the Babel or TypeScript plugin the cache identifier is `alloy-babel-loader` or `alloy-ts-loader`, respectively.
+
 ## Migration
 
 ### Remove old Alloy plugin
