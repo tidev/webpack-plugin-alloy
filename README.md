@@ -39,7 +39,7 @@ app/
 └── config.json
 ```
 
-### No automatic processing of assets/lib/vendor folders
+### assets/lib/vendor folders
 
 When you are migrating from an Alloy app without Webpack, you are probably used to the fact all content from the following directories is copied to your app:
 
@@ -47,13 +47,61 @@ When you are migrating from an Alloy app without Webpack, you are probably used 
 - `app/lib`
 - `app/vendor`
 
-This is only true for `app/assets` by default when you are using Webpack. All files from this directory will be copied directly into your app as-is. Source files in `app/lib` and `app/vendor` **need** to be `require`/`import`'ed to be bundled by Webpack so they are included in your app.
+This is only true for `app/assets` by default when you are using Webpack. All files from this directory will be copied directly into your app _as-is_. Source files in `app/lib` and `app/vendor` **need** to be `require`/`import`'ed to be bundled by Webpack so they are included in your app.
 
 Usage of the `app/vendor` directory is discuraged with Webpack. It is recommended to install all your third-party libraries as Node modules and let Webpack process them from there.
 
 ### Code changes
 
 In addition to the changes described in the [general guidelines](https://github.com/appcelerator/appcd-plugin-webpack/blob/develop/migration.md), there are a couple of Alloy specific changes that your need to apply to your project.
+
+#### Require files in assets/lib/vendor
+
+With Webpack requires are resolved at build time on your local machine, not at runtime from the root directory of your final app bundle. This may break some of your existing require statement since they rely on files being merged into the `Resources` dir by Alloy to be valid. Some of these requires in your app may need to be rewritten to accomodate this change.
+
+##### Absolute requires
+
+For example, for the file `app/lib/auth.js` the following require statements are valid in a plain Alloy app:
+
+```js
+// without webpack
+require('/auth');
+require('auth');
+```
+
+Only `require('auth')` will work out of the box when the Webpack build is used, though. So you either have to drop the leading slash to make a [module require](https://github.com/appcelerator/appcd-plugin-webpack/blob/develop/migration.md#module-paths) or use the `@` [alias](https://github.com/appcelerator/appcd-plugin-webpack/blob/develop/migration.md#aliases).
+
+```js
+// with webpack
+require('@/lib/auth');
+require('auth');
+```
+
+> 💡 **TIP:** It is recommended to use aliases instead of relying on the non-spec compliant module resolution that Titanium supports. That way it is more obvious where the files actually comes from. You can also [define your own aliases](https://github.com/appcelerator/appcd-plugin-webpack/blob/develop/migration.md#add-alias) if get tired of typing `@/lib` for example.
+
+##### Relative requires
+
+Another example are relative requires in `app/alloy.js`. Again, these are resolved at build time so they need to be slightly changed. Let's assume the following existing require to the file `app/lib/cache.js`:
+
+```js
+// without webpack
+const cache = require('./cache');
+```
+
+When resolved locally on your machine the require would resolve to `app/cache.js` which doesn't exist. Let's change it to point to the correct file:
+
+```js
+// with weback
+const cache = require('@/lib/cache');
+```
+
+#### Use `/alloy` to require Alloy
+
+Always use a leading slash when requiring Alloy related files, e.g. controllers, internals or built-ins.
+
+```js
+const animation = require('/alloy/animation');
+```
 
 #### Replace `WPATH` with `@widget`
 
