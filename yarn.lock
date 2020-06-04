@@ -244,16 +244,17 @@ ajv@^6.1.0, ajv@^6.10.0, ajv@^6.10.2:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-alloy-loader@^0.2.6:
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/alloy-loader/-/alloy-loader-0.2.6.tgz#1e698474a5828cc72a2df98d98b4d25cdcfb2156"
-  integrity sha512-/XD1YPHeruiNEfiDXDZ2gV00UCXblVMFCIKlejwYdNzSE6zu3ZrOBXk394SA1UXxlQoIha+7WCQpQYkmv19YXQ==
+alloy-loader@^0.2.9:
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/alloy-loader/-/alloy-loader-0.2.9.tgz#4794e2590ccac0eb1b1540bddb4015705dd7524e"
+  integrity sha512-kxtiLdw/ofPP4VZtbjW8USbXFn7jrhn1qLE4ln34ebciorTuC7F5qqAptMmKDSLQcthucDejSuYVEWR30Xq8xA==
   dependencies:
     alloy-utils "0.2.2"
     globby "^11.0.0"
     loader-utils "^2.0.0"
     neo-async "^2.6.1"
     source-map "^0.7.3"
+    webpack-sources "^1.4.3"
 
 alloy-utils@0.2.2:
   version "0.2.2"
@@ -3688,7 +3689,7 @@ webpack-log@^2.0.0:
     ansi-colors "^3.0.0"
     uuid "^3.3.2"
 
-webpack-sources@^1.4.0, webpack-sources@^1.4.1:
+webpack-sources@^1.4.0, webpack-sources@^1.4.1, webpack-sources@^1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-1.4.3.tgz#eedd8ec0b928fbf1cbfe994e22d2d890f330a933"
   integrity sha512-lgTS3Xhv1lCOKo7SA5TjKXMjpSM4sBjNV5+q2bqesbSPs5FjGmU6jjtBSkX9b4qW87vDIsCIlUPOEhbZrMdjeQ==

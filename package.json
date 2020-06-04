@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/appcelerator/webpack-plugin-alloy#readme",
   "dependencies": {
-    "alloy-loader": "^0.2.6",
+    "alloy-loader": "^0.2.9",
     "copy-webpack-plugin": "^5.1.1",
     "imports-loader": "^0.8.0"
   },
@@ -34,8 +34,9 @@
     "webpack": "^4.43.0"
   },
   "peerDependencies": {
-    "alloy": ">=1.14.0",
-    "alloy-compiler": ">=0.2.2",
+    "@titanium-sdk/webpack-plugin-babel": ">=0.1.2 <1.0.0",
+    "alloy": "^1.14.0",
+    "alloy-compiler": ">=0.2.2 <1.0.0",
     "webpack": "^4.0.0"
   },
   "publishConfig": {
