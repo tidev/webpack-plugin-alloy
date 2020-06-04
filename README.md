@@ -7,8 +7,10 @@
 To install this plugin in an existing project, run the following command in your project root:
 
 ```sh
-npm i -D @titanium-sdk/webpack-plugin-alloy alloy alloy-compiler
+npm i -D @titanium-sdk/webpack-plugin-alloy alloy alloy-compiler @titanium-sdk/webpack-plugin-babel
 ```
+
+> 💡 **NOTE:** The `alloy-loader` used to compile Alloy components with Webpack emits ES6 code only. This code needs to be transpiled which is why `@titanium-sdk/webpack-plugin-babel` is a peer dependency and you must install it as well when enabling Webpack in your Alloy project.
 
 Be sure to follow the migration steps below when enabling Webpack in an existing Titanium Alloy project, as well as the general [migration guideline](https://github.com/appcelerator/appcd-plugin-webpack/blob/develop/migration.md).
 
