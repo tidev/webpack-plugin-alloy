@@ -65,7 +65,7 @@ module.exports = function (api, options) {
 		// resolve -----------------------------------------------------------------
 
 		const alloyAliases = {
-			'alloy$': path.join(alloyRoot, 'template', 'lib', 'alloy.js'),
+			alloy$: path.join(alloyRoot, 'template', 'lib', 'alloy.js'),
 			'alloy/backbone$': path.join(alloyRoot, 'lib', 'alloy', 'backbone', backboneVersion, 'backbone.js'),
 			'alloy/constants$': path.join(path.dirname(require.resolve('alloy-utils')), 'constants.js'),
 			'alloy/controllers/BaseController$': path.join(alloyRoot, 'lib', 'alloy', 'controllers', 'BaseController.js'),
@@ -81,8 +81,8 @@ module.exports = function (api, options) {
 			'alloy/sha1': path.join(alloyRoot, 'builtins', 'sha1.js'),
 			'alloy/social': path.join(alloyRoot, 'builtins', 'social.js'),
 			'alloy/string': path.join(alloyRoot, 'builtins', 'string.js'),
-			'alloy': path.join(alloyRoot, 'lib', 'alloy'),
-		}
+			alloy: path.join(alloyRoot, 'lib', 'alloy')
+		};
 		config.resolve
 			.alias
 				.set('@', api.resolve('app/lib'))
