@@ -36,7 +36,7 @@
   "peerDependencies": {
     "@titanium-sdk/webpack-plugin-babel": ">=0.1.2 <1.0.0",
     "alloy": "^1.14.0",
-    "alloy-compiler": ">=0.2.2 <1.0.0",
+    "alloy-compiler": ">=0.2.3 <1.0.0",
     "webpack": "^4.0.0"
   },
   "publishConfig": {
