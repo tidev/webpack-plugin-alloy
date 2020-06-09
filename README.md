@@ -61,9 +61,20 @@ In addition to the changes described in the [general guidelines](https://github.
 
 With Webpack requires are resolved at build time on your local machine, not at runtime from the root directory of your final app bundle. This may break some of your existing require statement since they rely on files being merged into the `Resources` dir by Alloy to be valid. Some of these requires in your app may need to be rewritten to accomodate this change.
 
+##### Aliases
+
+There are two aliases defined in the Webpack configuration for Alloy that will help you to easily adopt to the changed behavior.
+
+- `@` -> `app/lib`
+
+  Example: `@/utils` would resolve to `app/lib/utils.js`
+- `@@` -> `app`
+
+  Example: `@@/vendor/some-lib` would resolve to `app/vendor/some-lib.js`
+
 ##### Absolute requires
 
-For example, for the file `app/lib/auth.js` the following require statements are valid in a plain Alloy app:
+For example, to require `app/lib/auth.js` the following statements are valid in a plain Alloy app:
 
 ```js
 // without webpack
@@ -71,39 +82,41 @@ require('/auth');
 require('auth');
 ```
 
-Only `require('auth')` will work out of the box when the Webpack build is used, though. So you either have to drop the leading slash to make a [module require](https://github.com/appcelerator/appcd-plugin-webpack/blob/develop/migration.md#module-paths) or use the `@` [alias](https://github.com/appcelerator/appcd-plugin-webpack/blob/develop/migration.md#aliases).
+Only `require('auth')` will work out of the box when the Webpack build is used, though. So you either have to drop the leading slash to make a [module require](https://github.com/appcelerator/appcd-plugin-webpack/blob/develop/migration.md#module-paths) or use the `@` [alias](#aliases) shown above.
 
 ```js
 // with webpack
-require('@/lib/auth');
+require('@/auth');
 require('auth');
 ```
 
-> 💡 **TIP:** It is recommended to use aliases instead of relying on the non-spec compliant module resolution that Titanium supports. That way it is more obvious where the files actually comes from. You can also [define your own aliases](https://github.com/appcelerator/appcd-plugin-webpack/blob/develop/migration.md#add-alias) if get tired of typing `@/lib` for example.
+> 💡 **TIP:** It is recommended to use the `@` alias instead of relying on the non-spec compliant module resolution that Titanium supports. That way it is more obvious where the file actually comes from. You can also [define your own aliases](https://github.com/appcelerator/appcd-plugin-webpack/blob/develop/migration.md#add-alias).
 
 ##### Relative requires
 
-Another example are relative requires in `app/alloy.js`. Again, these are resolved at build time so they need to be slightly changed. Let's assume the following existing require to the file `app/lib/cache.js`:
+Another example are relative requires in `app/alloy.js`. Again, these are resolved at build time so they need to be slightly changed. Let's assume `app/alloy.js` contains the following require to the file `app/lib/cache.js`:
 
 ```js
 // without webpack
 const cache = require('./cache');
 ```
 
-When resolved locally on your machine the require would resolve to `app/cache.js` which doesn't exist. Let's change it to point to the correct file:
+When resolved locally on your machine the require would resolve to `app/cache.js` which doesn't exist. Let's use the `@` alias again to refer to the correct file:
 
 ```js
 // with weback
-const cache = require('@/lib/cache');
+const cache = require('@/cache');
 ```
 
-#### Use `/alloy` to require Alloy
+#### Prefer `alloy` to require Alloy
 
-Always use a leading slash when requiring Alloy related files, e.g. controllers, internals or built-ins.
+Use a module style require when requiring Alloy related files, e.g. controllers, internals or built-ins.
 
 ```js
-const animation = require('/alloy/animation');
+const animation = require('alloy/animation');
 ```
+
+For Backwards compatibility the absolute `/alloy` require is supported as well, but using a module style require is strongly recommened.
 
 #### Replace `WPATH` with `@widget`
 
@@ -160,7 +173,8 @@ This plugin will add/modify the following Webpack options:
 ### Resolve
 
 - Aliases
-  - `@`: `app`
+  - `@`: `app/lib`
+  - `@@`: `app`
 - Extensions: `xml`, `tss`
 - Modules: `app/lib`, `app/vendor`
 
