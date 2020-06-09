@@ -85,7 +85,8 @@ module.exports = function (api, options) {
 		}
 		config.resolve
 			.alias
-				.set('@', api.resolve('app'))
+				.set('@', api.resolve('app/lib'))
+				.set('@@', api.resolve('app'))
 				.merge(alloyAliases)
 				.merge(Object.keys(alloyAliases).reduce((acc, alias) => {
 					acc[`/${alias}`] = alloyAliases[alias];
