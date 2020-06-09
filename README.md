@@ -74,7 +74,7 @@ There are two aliases defined in the Webpack configuration for Alloy that will h
 
 ##### Absolute requires
 
-For example, to require `app/lib/auth.js` the following statements are valid in a plain Alloy app:
+To require `app/lib/auth.js` the following statements are valid in a plain Alloy app:
 
 ```js
 // without webpack
