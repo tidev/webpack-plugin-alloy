@@ -64,26 +64,33 @@ module.exports = function (api, options) {
 
 		// resolve -----------------------------------------------------------------
 
+		const alloyAliases = {
+			'alloy$': path.join(alloyRoot, 'template', 'lib', 'alloy.js'),
+			'alloy/backbone$': path.join(alloyRoot, 'lib', 'alloy', 'backbone', backboneVersion, 'backbone.js'),
+			'alloy/constants$': path.join(path.dirname(require.resolve('alloy-utils')), 'constants.js'),
+			'alloy/controllers/BaseController$': path.join(alloyRoot, 'lib', 'alloy', 'controllers', 'BaseController.js'),
+			'alloy/controllers': api.resolve('app', 'controllers'),
+			'alloy/models': api.resolve('app', 'models'),
+			'alloy/styles': api.resolve('app', 'styles'),
+			'alloy/widgets': api.resolve('app', 'widgets'),
+			'alloy/CFG': api.resolve('Resources', 'alloy', 'CFG'),
+			'alloy/animation': path.join(alloyRoot, 'builtins', 'animation.js'),
+			'alloy/dialogs': path.join(alloyRoot, 'builtins', 'dialogs.js'),
+			'alloy/measurement': path.join(alloyRoot, 'builtins', 'measurement.js'),
+			'alloy/moment': path.join(alloyRoot, 'builtins', 'moment'),
+			'alloy/sha1': path.join(alloyRoot, 'builtins', 'sha1.js'),
+			'alloy/social': path.join(alloyRoot, 'builtins', 'social.js'),
+			'alloy/string': path.join(alloyRoot, 'builtins', 'string.js'),
+			'alloy': path.join(alloyRoot, 'lib', 'alloy'),
+		}
 		config.resolve
 			.alias
 				.set('@', api.resolve('app'))
-				.set('/alloy$', path.join(alloyRoot, 'template', 'lib', 'alloy.js'))
-				.set('/alloy/backbone$', path.join(alloyRoot, 'lib', 'alloy', 'backbone', backboneVersion, 'backbone.js'))
-				.set('/alloy/constants$', path.join(path.dirname(require.resolve('alloy-utils')), 'constants.js'))
-				.set('/alloy/controllers/BaseController$', path.join(alloyRoot, 'lib', 'alloy', 'controllers', 'BaseController.js'))
-				.set('/alloy/controllers', api.resolve('app', 'controllers'))
-				.set('/alloy/models', api.resolve('app', 'models'))
-				.set('/alloy/styles', api.resolve('app', 'styles'))
-				.set('/alloy/widgets', api.resolve('app', 'widgets'))
-				.set('/alloy/CFG', api.resolve('Resources', 'alloy', 'CFG'))
-				.set('/alloy/animation', path.join(alloyRoot, 'builtins', 'animation.js'))
-				.set('/alloy/dialogs', path.join(alloyRoot, 'builtins', 'dialogs.js'))
-				.set('/alloy/measurement', path.join(alloyRoot, 'builtins', 'measurement.js'))
-				.set('/alloy/moment', path.join(alloyRoot, 'builtins', 'moment'))
-				.set('/alloy/sha1', path.join(alloyRoot, 'builtins', 'sha1.js'))
-				.set('/alloy/social', path.join(alloyRoot, 'builtins', 'social.js'))
-				.set('/alloy/string', path.join(alloyRoot, 'builtins', 'string.js'))
-				.set('/alloy', path.join(alloyRoot, 'lib', 'alloy'))
+				.merge(alloyAliases)
+				.merge(Object.keys(alloyAliases).reduce((acc, alias) => {
+					acc[`/${alias}`] = alloyAliases[alias];
+					return acc;
+				}, {}))
 				.end()
 			.extensions
 				.merge([ '.xml', '.tss' ])
