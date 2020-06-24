@@ -41,6 +41,8 @@ app/
 └── config.json
 ```
 
+> 💡 **TIP:** Add a `.gitkeep` file in any empty directories you created to make sure they will be added to Git.
+
 ### assets/lib/vendor folders
 
 When you are migrating from an Alloy app without Webpack, you are probably used to the fact all content from the following directories is copied to your app:
