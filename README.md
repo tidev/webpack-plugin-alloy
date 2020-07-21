@@ -12,7 +12,7 @@ npm i -D @titanium-sdk/webpack-plugin-alloy alloy alloy-compiler @titanium-sdk/w
 
 > 💡 **NOTE:** The `alloy-loader` used to compile Alloy components with Webpack emits ES6 code only. This code needs to be transpiled which is why `@titanium-sdk/webpack-plugin-babel` is a peer dependency and you must install it as well when enabling Webpack in your Alloy project.
 
-Be sure to follow the migration steps below when enabling Webpack in an existing Titanium Alloy project, as well as the general [migration guideline](https://github.com/appcelerator/appcd-plugin-webpack/blob/develop/migration.md).
+Be sure to follow the migration steps below and the general [migration guideline](https://github.com/appcelerator/appcd-plugin-webpack/blob/develop/migration.md) when enabling Webpack in an existing Titanium Alloy project. Also take a look at the [configuration](https://github.com/appcelerator/webpack-plugin-babel#configuration) of the Babel plugin.
 
 ## Caching
 
@@ -26,7 +26,7 @@ Since Webpack now compiles your Alloy app the default Alloy plugin is not requir
 
 ### Create required folders
 
-Webpack requires that your project includes certain Alloy sub-folders, even if they are empty. This is due to the way Webpack resolves dynamic requires and it needs to scan folders like `app/controllers` or `app/widgets`. Make sure your project has these files and folders and create them if neccessary:
+Webpack requires that your project includes certain Alloy sub-folders, even if they are empty. This is due to the way Webpack resolves dynamic requires and it needs to scan folders like `app/controllers` or `app/widgets`. Make sure your project contains the following files and folders and create them if neccessary:
 
 ```txt
 app/
