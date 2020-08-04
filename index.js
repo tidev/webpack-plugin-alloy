@@ -36,7 +36,10 @@ module.exports = function (api, options) {
 	});
 
 	const theme = compileConfig.theme;
-	const watchFiles = [ path.join(appDir, 'config.json') ];
+	const watchFiles = [
+		path.join(appDir, 'config.json'),
+		path.join(appDir, 'styles', 'app.tss')
+	];
 	if (theme) {
 		watchFiles.push(path.join(appDir, 'themes', theme, 'config.json'));
 	}
@@ -235,7 +238,8 @@ module.exports = function (api, options) {
 		config.plugin('watch-ignore')
 			.use(WatchIgnorePlugin, [
 				[
-					/alloy[/\\]CFG.js/
+					/alloy[/\\]CFG.js/,
+					/styles[/\\]app.tss/
 				]
 			]);
 
