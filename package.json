@@ -1,6 +1,6 @@
 {
   "name": "@titanium-sdk/webpack-plugin-alloy",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Titanium Alloy Plugin for Appcd Webpack",
   "main": "index.js",
   "scripts": {
