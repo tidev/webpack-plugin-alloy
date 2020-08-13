@@ -22,6 +22,9 @@ module.exports = function (api, options) {
 		deploytype: build.deployType
 	};
 	const compileConfig = createCompileConfig({ projectDir, alloyConfig });
+	// write build log to cache config generation on restarts, it's not used
+	// anywhere else in webpack so we can write it right away
+	compileConfig.buildLog.write();
 	const alloyCompiler = createCompiler({ compileConfig, webpack: true });
 	const backboneVersion = compileConfig.backbone ? compileConfig.backbone : '0.9.2';
 
