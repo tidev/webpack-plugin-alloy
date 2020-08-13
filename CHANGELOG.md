@@ -1,3 +1,11 @@
+## [0.2.2](https://github.com/appcelerator/webpack-plugin-alloy/compare/0.2.1...0.2.2) (2020-08-13)
+
+
+### Bug Fixes
+
+* write alloy build log ([35ff596](https://github.com/appcelerator/webpack-plugin-alloy/commit/35ff5961f0ea1e12f3aece7e95ac99485788a691))
+
+
 ## [0.2.1](https://github.com/appcelerator/webpack-plugin-alloy/compare/0.2.0...0.2.1) (2020-08-04)
 
 
