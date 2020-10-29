@@ -31,7 +31,7 @@
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-axway": "^5.0.0",
-    "webpack": "^4.43.0"
+    "webpack": "^5.3.1"
   },
   "peerDependencies": {
     "@titanium-sdk/webpack-plugin-babel": ">=0.1.2 <1.0.0",
