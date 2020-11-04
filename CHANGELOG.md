@@ -1,4 +1,12 @@
-## [0.2.3](https://github.com/appcelerator/webpack-plugin-alloy/compare/0.2.2...0.2.3) (2020-11-04)
+## [0.2.4](https://github.com/appcelerator/webpack-plugin-alloy/compare/0.2.3...0.2.4) (2020-11-04)
+
+
+### Bug Fixes
+
+* pass correct options to import-loader ([7b9d314](https://github.com/appcelerator/webpack-plugin-alloy/commit/7b9d314e43093dc82309fbc5e6b612e4a27eaf22))
+
+
+## [0.2.3](https://github.com/appcelerator/webpack-plugin-alloy/compare/0.2.2...0.2.3) (2020-11-04) [YANKED]
 
 
 ### Bug Fixes
