@@ -1,3 +1,11 @@
+## [0.2.3](https://github.com/appcelerator/webpack-plugin-alloy/compare/0.2.2...0.2.3) (2020-11-04)
+
+
+### Bug Fixes
+
+* copy widgets assets to expected folder structure ([a11b444](https://github.com/appcelerator/webpack-plugin-alloy/commit/a11b44482b3516510aa6c5f19a6a7478feff97f9))
+
+
 ## [0.2.2](https://github.com/appcelerator/webpack-plugin-alloy/compare/0.2.1...0.2.2) (2020-08-13)
 
 
