@@ -137,7 +137,10 @@ module.exports = function (api, options) {
 			.rule('backbone')
 				.test(/backbone\.js$/)
 				.use('imports-loader')
-					.loader('imports-loader?define=>false');
+					.loader('imports-loader')
+					.options({
+						additionalCode: 'const define = false;'
+					});
 
 		// plugins -----------------------------------------------------------------
 
