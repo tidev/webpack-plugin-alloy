@@ -210,8 +210,13 @@ module.exports = function (api, options) {
 			if (fs.existsSync(widgetAssetPath)) {
 				copyWidgetAssetsOptions.push({
 					from: path.join(widget.dir, 'assets'),
-					to: `./${widget.manifest.id}/`,
-					ignore: [ `${platformExclude[build.platform]}/**/*` ]
+					to: '.',
+					ignore: [ `${platformExclude[build.platform]}/**/*` ],
+					transformPath(targetPath) {
+						const dirname = path.dirname(targetPath);
+						const basename = path.basename(targetPath);
+						return path.join(dirname, widget.manifest.id, basename);
+					}
 				});
 			}
 		});
