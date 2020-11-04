@@ -266,21 +266,21 @@ ajv@^6.1.0, ajv@^6.10.0, ajv@^6.10.2, ajv@^6.12.4:
     uri-js "^4.2.2"
 
 alloy-loader@^0.2.9:
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/alloy-loader/-/alloy-loader-0.2.9.tgz#4794e2590ccac0eb1b1540bddb4015705dd7524e"
-  integrity sha512-kxtiLdw/ofPP4VZtbjW8USbXFn7jrhn1qLE4ln34ebciorTuC7F5qqAptMmKDSLQcthucDejSuYVEWR30Xq8xA==
+  version "0.2.11"
+  resolved "https://registry.yarnpkg.com/alloy-loader/-/alloy-loader-0.2.11.tgz#026f7251b0b7f2ba1617673c7d5b47ac42f4600a"
+  integrity sha512-nqzy6eMADHaXDYxqpyOd6bHn7g9311JhDBSoeMuilklb7SGXAq0rzNX9Avyux7hFv6wOuYM49eBLz0S5c4PPQQ==
   dependencies:
-    alloy-utils "0.2.2"
+    alloy-utils "0.2.3"
     globby "^11.0.0"
     loader-utils "^2.0.0"
     neo-async "^2.6.1"
     source-map "^0.7.3"
     webpack-sources "^1.4.3"
 
-alloy-utils@0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/alloy-utils/-/alloy-utils-0.2.2.tgz#b7466e3aeaa2a06aaa85b0cd0bfa6396dfa97943"
-  integrity sha512-SFZuFMle3V+DapdvuFiI3IX69RggISx+UWMMETwA6GraB7jskvqUgQ+fxKhOTuk8rwjl7h54A2eLx1nI9cZNsA==
+alloy-utils@0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/alloy-utils/-/alloy-utils-0.2.3.tgz#c1f26e0d38ad2ccf70265189c8a560c0bb531e5d"
+  integrity sha512-Y1USmdp1+QHkq8cF7SH3qLgfPr4ALbCzujqhQyuZEX9OqrlygGolsI1Tjb3+A1Xt2gJbv2dueNApmOieRdq+NQ==
   dependencies:
     "@babel/code-frame" "^7.8.3"
     chmodr "^1.2.0"
