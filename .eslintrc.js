@@ -1,3 +1,3 @@
 module.exports = {
-  extends: 'axway/env-node'
-}
+	extends: 'axway/env-node'
+};
