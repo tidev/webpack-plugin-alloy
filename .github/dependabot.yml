@@ -1,0 +1,19 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "10:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: copy-webpack-plugin
+    versions:
+    - ">= 6.a, < 7"
+  - dependency-name: webpack
+    versions:
+    - ">= 5.a, < 6"
+  - dependency-name: eslint
+    versions:
+    - 7.19.0
+    - 7.21.0
